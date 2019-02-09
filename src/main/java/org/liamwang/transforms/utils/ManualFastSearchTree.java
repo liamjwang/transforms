@@ -87,7 +87,7 @@ public class ManualFastSearchTree<T> {
      */
     public Traversal shortestPath(T val1, T val2) {
 
-        if (val1 == val2) {
+        if (val1.equals(val2)) {
             Traversal traversal = new Traversal();
             traversal.root = val1;
             return traversal;
@@ -102,7 +102,7 @@ public class ManualFastSearchTree<T> {
 
         LinkedList<T> val1ToRoot = new LinkedList<>();
         Node<T> current = nodes.get(val1);
-        while (!current.val.equals(root.val)) {
+        while (!current.equals(root)) {
             val1ToRoot.addLast(current.val);
             current = current.parent;
         }
@@ -110,7 +110,7 @@ public class ManualFastSearchTree<T> {
 
         LinkedList<T> val2ToRoot = new LinkedList<>();
         current = nodes.get(val2);
-        while (!current.val.equals(root.val)) {
+        while (!current.equals(root)) {
             val2ToRoot.addLast(current.val);
             current = current.parent;
         }
