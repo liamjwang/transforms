@@ -1,4 +1,4 @@
-package com.liamwang.transforms;
+package org.liamwang.transforms;
 
 import org.liamwang.transforms.utils.ManualFastSearchTree;
 import org.liamwang.transforms.utils.ManualFastSearchTree.Traversal;
