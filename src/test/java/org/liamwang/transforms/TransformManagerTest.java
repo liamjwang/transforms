@@ -2,7 +2,7 @@ package org.liamwang.transforms;
 
 import org.liamwang.transforms.threed.Transform3D;
 
-public class Main {
+public class TransformManagerTest {
 
     public static void main(String[] args) {
         TransformManager tf = new TransformManager();
