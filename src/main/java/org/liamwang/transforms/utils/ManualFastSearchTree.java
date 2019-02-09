@@ -147,29 +147,30 @@ public class ManualFastSearchTree<T> {
     }
 
 
-    private class Node<T> {
+    @SuppressWarnings("unused")
+    private class Node<U> {
 
-        private T val;
-        private Node<T> parent;
-        private HashSet<Node<T>> children = new HashSet<>();
+        private U val;
+        private Node<U> parent;
+        private HashSet<Node<U>> children = new HashSet<>();
 
 
-        private Node(T val, Node<T> parent) {
+        private Node(U val, Node<U> parent) {
             this.val = val;
             if (parent != null) {
                 this.parent = parent;
             }
         }
 
-        private void addChild(Node<T> child) {
+        private void addChild(Node<U> child) {
             children.add(child);
         }
 
-        private Node<T> getParent() {
+        private Node<U> getParent() {
             return parent;
         }
 
-        private HashSet<Node<T>> getChildren() {
+        private HashSet<Node<U>> getChildren() {
             return children;
         }
     }
@@ -178,6 +179,7 @@ public class ManualFastSearchTree<T> {
      * Traversals are paths through the tree. They consist of an up list, going from first node to
      * a common root, a root, and a down list, going from the root to the second node.
      */
+    @SuppressWarnings("WeakerAccess")
     public class Traversal {
 
         T root;
