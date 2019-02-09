@@ -43,6 +43,14 @@ public class ManualFastSearchTree<T> {
         root = newNode;
     }
 
+    public T getParent(T val) {
+        Node<T> tNode = nodes.get(val);
+        if (tNode == null) {
+            throw new NoSuchElementException("Val " + val + " not in tree.");
+        }
+        return tNode.getParent().val;
+    }
+
     public Traversal shortestPath(T val1, T val2) {
 
         if (val1 == val2) {
