@@ -26,12 +26,12 @@ public class Transform3D {
         this(Vector3D.ZERO, rotation);
     }
 
-    public Transform3D(double x, double y, double yaw) { // TODO: Replace with static fromTransform2D
-        this(new Vector3D(x, y, 0), new Rotation(RotationOrder.XYZ, RotationConvention.FRAME_TRANSFORM, 0, 0, yaw));
-    }
-
     public Transform3D(double x, double y, double z, double roll, double pitch, double yaw) {
         this(new Vector3D(x, y, z), new Rotation(RotationOrder.XYZ, RotationConvention.FRAME_TRANSFORM, roll, pitch, yaw));
+    }
+
+    public Transform3D(double x, double y, double yaw) { // TODO: Replace with static fromTransform2D
+        this(x, y, 0, 0, 0, yaw);
     }
 
     public Transform2D toTransform2D() {
