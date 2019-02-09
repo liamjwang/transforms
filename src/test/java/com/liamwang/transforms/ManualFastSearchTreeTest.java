@@ -3,7 +3,7 @@ package com.liamwang.transforms;
 import org.liamwang.transforms.utils.ManualFastSearchTree;
 import org.liamwang.transforms.utils.ManualFastSearchTree.Traversal;
 
-public class Test {
+public class ManualFastSearchTreeTest {
 
     private static ManualFastSearchTree<String> tree = new ManualFastSearchTree<>(".");
 
