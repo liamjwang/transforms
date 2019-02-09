@@ -44,6 +44,20 @@ public class ManualFastSearchTree<T> {
     }
 
     /**
+     * Adds a tree to the tree with the specified parent node.
+     * @param tree The tree to add.
+     * @param parent The value of the parent node for the tree.
+     */
+    public void add(ManualFastSearchTree<T> tree, T parent) {
+        Node<T> parentNode = nodes.get(parent);
+        if (parentNode == null) {
+            throw new NoSuchElementException("Parent " + parent + " not in tree.");
+        }
+        parentNode.addChild(tree.root);
+        nodes.putAll(tree.nodes);
+    }
+
+    /**
      * Sets the root to a new node and makes the previous root a child of the new root.
      * @param val The value of the new root.
      */
