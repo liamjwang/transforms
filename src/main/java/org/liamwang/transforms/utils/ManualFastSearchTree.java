@@ -43,6 +43,10 @@ public class ManualFastSearchTree<T> {
         root = newNode;
     }
 
+    public T getRoot() {
+        return root.val;
+    }
+
     public T getParent(T val) {
         Node<T> tNode = nodes.get(val);
         if (tNode == null) {
@@ -142,6 +146,10 @@ public class ManualFastSearchTree<T> {
 
     public class Traversal {
 
+        T root;
+        LinkedList<T> upList = new LinkedList<>();
+        LinkedList<T> downList = new LinkedList<>();
+
         public T getRoot() {
             return root;
         }
@@ -165,10 +173,6 @@ public class ManualFastSearchTree<T> {
         private void setDownList(LinkedList<T> downList) {
             this.downList = downList;
         }
-
-        T root;
-        LinkedList<T> upList = new LinkedList<>();
-        LinkedList<T> downList = new LinkedList<>();
     }
 
 }

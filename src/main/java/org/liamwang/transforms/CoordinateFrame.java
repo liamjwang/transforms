@@ -18,4 +18,8 @@ public class CoordinateFrame {
     public Transform3D getRelativeTransform3D() {
         return relativeTransform3D;
     }
+
+    public String getName() {
+        return name;
+    }
 }
