@@ -66,7 +66,7 @@ public class TransformManager {
                     if (!toTree.getRoot().equals(toFrame)) {
                         throw new IllegalArgumentException("Destination frame " + toFrame + " is not a direct child of " + fromFrame + " and already has a parent.");
                     }
-                    fromTree.mergeOther(toTree, fromFrame);
+                    fromTree.add(toTree, fromFrame);
                 }
             } else { // fromFrame does exist, toFrame does not exist
                 toFrame = new CoordinateFrame(toId, fromFrame.getTreeID());

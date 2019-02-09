@@ -163,11 +163,6 @@ public class ManualFastSearchTree<T> {
         }
     }
 
-    public void mergeOther(ManualFastSearchTree<T> toTree, T fromFrame) {
-
-    }
-
-
     @SuppressWarnings("unused")
     private class Node<U> {
 
