@@ -52,6 +52,9 @@ public class ManualFastSearchTree<T> {
         if (tNode == null) {
             throw new NoSuchElementException("Val " + val + " not in tree.");
         }
+        if (tNode.getParent() == null) {
+            return null;
+        }
         return tNode.getParent().val;
     }
 
@@ -114,6 +117,10 @@ public class ManualFastSearchTree<T> {
 
             return traversal;
         }
+    }
+
+    public void mergeOther(ManualFastSearchTree<T> toTree, T fromFrame) {
+
     }
 
 

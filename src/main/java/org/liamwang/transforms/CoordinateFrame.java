@@ -6,9 +6,11 @@ public class CoordinateFrame {
 
     private final String name;
     private Transform3D relativeTransform3D;
+    private int treeID;
 
-    public CoordinateFrame(String name) {
+    public CoordinateFrame(String name, int treeID) {
         this.name = name;
+        this.treeID = treeID;
     }
 
     public void setRelativeTransform(Transform3D relativeTransform3D) {
@@ -21,5 +23,13 @@ public class CoordinateFrame {
 
     public String getName() {
         return name;
+    }
+
+    public int getTreeID() {
+        return treeID;
+    }
+
+    public void setTreeID(int treeID) {
+        this.treeID = treeID;
     }
 }
