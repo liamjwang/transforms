@@ -7,18 +7,29 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
- * @author Jonathan Edelman
+ * A tree with manually-defined structure suited for pathing between elements. Provides some
+ * of the functionality of ROS's TF.
+ * @author {edelmanjm}
  */
 public class ManualFastSearchTree<T> {
 
     private HashMap<T, Node<T>> nodes = new HashMap<>();
     private Node<T> root;
 
+    /**
+     * Create a new tree.
+     * @param rootVal The value of the root node.
+     */
     public ManualFastSearchTree(T rootVal) {
         this.root = new Node<>(rootVal, null);
         nodes.put(rootVal, root);
     }
 
+    /**
+     * Adds a value with the specified parent node.
+     * @param val The value of the new node.
+     * @param parent The value of the parent node for the new node.
+     */
     public void add(T val, T parent) {
         Node<T> parentNode = nodes.get(parent);
         if (parentNode == null) {
@@ -32,6 +43,10 @@ public class ManualFastSearchTree<T> {
         nodes.put(val, newNode);
     }
 
+    /**
+     * Sets the root to a new node and makes the previous root a child of the new root.
+     * @param val The value of the new root.
+     */
     public void setRoot(T val) {
         if (nodes.get(val) != null) {
             throw new IllegalStateException("Val " + val + " already in tree.");
@@ -43,10 +58,19 @@ public class ManualFastSearchTree<T> {
         root = newNode;
     }
 
+    /**
+     * Gets the root node's value.
+     * @return The value of the root node.
+     */
     public T getRoot() {
         return root.val;
     }
 
+    /**
+     * Gets the parent node's value of a value.
+     * @param val The value.
+     * @return The parent node's value.
+     */
     public T getParent(T val) {
         Node<T> tNode = nodes.get(val);
         if (tNode == null) {
@@ -55,6 +79,12 @@ public class ManualFastSearchTree<T> {
         return tNode.getParent().val;
     }
 
+    /**
+     * Finds the shortest path between two values, as defined by levels in the tree.
+     * @param val1 The value to move up in the tree towards.
+     * @param val2 The value to move down in the tree towards.
+     * @return A traversal representing the path.
+     */
     public Traversal shortestPath(T val1, T val2) {
 
         if (val1 == val2) {
@@ -144,6 +174,10 @@ public class ManualFastSearchTree<T> {
         }
     }
 
+    /**
+     * Traversals are paths through the tree. They consist of an up list, going from first node to
+     * a common root, a root, and a down list, going from the root to the second node.
+     */
     public class Traversal {
 
         T root;
