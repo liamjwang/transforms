@@ -51,7 +51,7 @@ public class Transform3D {
         return new Transform3D(this.orientation.applyInverseTo(other.position).add(this.position), this.orientation.applyTo(other.orientation));
     }
 
-    public Transform3D subtract(Transform3D other) { // TODO: Is this even correct? (probably not)
+    public Transform3D subtract(Transform3D other) {
         return add(other.negate());
     }
 
