@@ -54,6 +54,7 @@ public class ManualFastSearchTree<T> {
         if (parentNode == null) {
             throw new NoSuchElementException("Parent " + parent + " not in tree.");
         }
+        tree.root.parent = parentNode;
         parentNode.addChild(tree.root);
         nodes.putAll(tree.nodes);
     }
