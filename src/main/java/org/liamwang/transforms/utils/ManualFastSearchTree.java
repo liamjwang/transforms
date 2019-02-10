@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * of the functionality of ROS's TF.
  * @author {edelmanjm}
  */
-public class ManualFastSearchTree<T> {
+public class ManualFastSearchTree<T> implements Cloneable {
 
     private HashMap<T, Node<T>> nodes = new HashMap<>();
     private Node<T> root;
@@ -44,16 +44,20 @@ public class ManualFastSearchTree<T> {
     }
 
     /**
-     * Adds a tree to the tree with the specified parent node.
+     * Adds a tree to the tree with the specified parent node. This function will
+     * probably have side effects, as the parent of the root is redirected to the new value.
+     * Unless you have a very good reason to do otherwise, consider the tree destroyed as a
+     * result of this operation.
      * @param tree The tree to add.
      * @param parent The value of the parent node for the tree.
      */
-    public void add(ManualFastSearchTree<T> tree, T parent) {
+    public void addUnsafe(ManualFastSearchTree<T> tree, T parent) {
         Node<T> parentNode = nodes.get(parent);
         if (parentNode == null) {
             throw new NoSuchElementException("Parent " + parent + " not in tree.");
         }
         parentNode.addChild(tree.root);
+        tree.root.setParent(parentNode);
         nodes.putAll(tree.nodes);
     }
 
@@ -68,7 +72,7 @@ public class ManualFastSearchTree<T> {
         Node<T> newNode = new Node<>(val, null);
         newNode.addChild(root);
         nodes.put(val, newNode);
-        root.parent = newNode;
+        root.setParent(newNode);
         root = newNode;
     }
 
@@ -118,7 +122,7 @@ public class ManualFastSearchTree<T> {
         Node<T> current = nodes.get(val1);
         while (!current.equals(root)) {
             val1ToRoot.addLast(current.val);
-            current = current.parent;
+            current = current.getParent();
         }
         val1ToRoot.addLast(root.val);
 
@@ -126,7 +130,7 @@ public class ManualFastSearchTree<T> {
         current = nodes.get(val2);
         while (!current.equals(root)) {
             val2ToRoot.addLast(current.val);
-            current = current.parent;
+            current = current.getParent();
         }
         val2ToRoot.addLast(root.val);
 
@@ -150,7 +154,7 @@ public class ManualFastSearchTree<T> {
                 currentVal2 = d2.next();
             } while (currentVal1.equals(currentVal2));
 
-            traversal.setRoot(nodes.get(currentVal1).parent.val);
+            traversal.setRoot(nodes.get(currentVal1).getParent().val);
             traversal.getUpList().addFirst(currentVal1);
             d1.forEachRemaining(traversal.getUpList()::addFirst);
             traversal.getDownList().addLast(currentVal2);
@@ -160,19 +164,27 @@ public class ManualFastSearchTree<T> {
         }
     }
 
+    // TODO implement this
+    /**
+     * Deep clone of the tree. All nodes will be copied, their values will not be.
+     */
+//    @Override
+//    public ManualFastSearchTree<T> clone() throws CloneNotSupportedException {
+//
+//    }
+
 
     @SuppressWarnings("unused")
-    private class Node<U> {
+    private class Node<U> implements Cloneable {
 
         private U val;
         private Node<U> parent;
         private HashSet<Node<U>> children = new HashSet<>();
 
-
         private Node(U val, Node<U> parent) {
             this.val = val;
             if (parent != null) {
-                this.parent = parent;
+                this.setParent(parent);
             }
         }
 
@@ -184,8 +196,18 @@ public class ManualFastSearchTree<T> {
             return parent;
         }
 
+        public void setParent(Node<U> parent) {
+            this.parent = parent;
+        }
+
         private HashSet<Node<U>> getChildren() {
             return children;
+        }
+
+        @Override
+        public Node<U> clone() throws CloneNotSupportedException {
+            //noinspection unchecked
+            return (Node<U>) super.clone();
         }
     }
 
