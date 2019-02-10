@@ -115,12 +115,23 @@ public class TransformManager {
             throw new IllegalArgumentException("No path from " + sourceId + " to " + destId + ".");
         }
         Traversal shortestPath = frameTreeMap.get(sourceFrame.getTreeID()).shortestPath(sourceFrame, destFrame);
-        shortestPath.getDownList().forEach(frame -> {
-            System.out.println(((CoordinateFrame) frame).getName());
-        });
-        shortestPath.getUpList().forEach(frame -> {
-            System.out.println(((CoordinateFrame) frame).getName());
-        });
-        return null;
+        Transform3D sum = Transform3D.IDENTITY;
+        for (Object frame : shortestPath.getDownList()) {
+            Transform3D relativeTransform3D = ((CoordinateFrame) frame).getRelativeTransform3D();
+            if (relativeTransform3D == null) {
+                continue;
+            }
+            sum = sum.add(relativeTransform3D);
+        }
+        ;
+        for (Object frame : shortestPath.getUpList()) {
+            Transform3D relativeTransform3D = ((CoordinateFrame) frame).getRelativeTransform3D();
+            if (relativeTransform3D == null) {
+                continue;
+            }
+            sum = sum.subtract(relativeTransform3D);
+        }
+        ;
+        return sum;
     }
 }
