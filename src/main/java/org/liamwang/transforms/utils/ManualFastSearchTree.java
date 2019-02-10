@@ -1,5 +1,6 @@
 package org.liamwang.transforms.utils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -94,6 +95,10 @@ public class ManualFastSearchTree<T> {
             return null;
         }
         return tNode.getParent().val;
+    }
+
+    public Collection<T> getValues() {
+        return nodes.keySet();
     }
 
     /**

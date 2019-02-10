@@ -32,4 +32,9 @@ public class CoordinateFrame {
     public void setTreeID(int treeID) {
         this.treeID = treeID;
     }
+
+    @Override
+    public String toString() {
+        return "{CoordinateFrame " + name + " with treeID " + treeID + "}";
+    }
 }

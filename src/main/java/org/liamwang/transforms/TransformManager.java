@@ -15,7 +15,7 @@ import org.liamwang.transforms.utils.ManualFastSearchTree.Traversal;
 public class TransformManager {
 
     private Map<String, CoordinateFrame> frameMap = new HashMap<>(); // Frame Name -> CoordinateFrame
-    private Map<Integer, ManualFastSearchTree<CoordinateFrame>> frameTreeMap; // TreeID -> Tree
+    private Map<Integer, ManualFastSearchTree<CoordinateFrame>> frameTreeMap = new HashMap<>(); // TreeID -> Tree
     private int treeIDInc = 0;
 
     /**
@@ -55,8 +55,8 @@ public class TransformManager {
         CoordinateFrame fromFrame = frameMap.get(fromId);
         CoordinateFrame toFrame = frameMap.get(toId);
 
-        ManualFastSearchTree<CoordinateFrame> toTree = frameTreeMap.get(toFrame.getTreeID());
-        ManualFastSearchTree<CoordinateFrame> fromTree = frameTreeMap.get(fromFrame.getTreeID());
+        ManualFastSearchTree<CoordinateFrame> toTree = toFrame == null ? null : frameTreeMap.get(toFrame.getTreeID());
+        ManualFastSearchTree<CoordinateFrame> fromTree = fromFrame == null ? null : frameTreeMap.get(fromFrame.getTreeID());
 
         if (fromFrame != null) {
             if (toFrame != null) { // fromFrame and toFrame both exist
@@ -66,7 +66,13 @@ public class TransformManager {
                     if (!toTree.getRoot().equals(toFrame)) {
                         throw new IllegalArgumentException("Destination frame " + toFrame + " is not a direct child of " + fromFrame + " and already has a parent.");
                     }
+                    int toTreeID = toFrame.getTreeID();
+                    int fromTreeID = fromFrame.getTreeID();
                     fromTree.add(toTree, fromFrame);
+                    toTree.getValues().forEach(value -> {
+                        value.setTreeID(fromTreeID);
+                    });
+                    frameTreeMap.remove(toTreeID);
                 }
             } else { // fromFrame does exist, toFrame does not exist
                 toFrame = new CoordinateFrame(toId, fromFrame.getTreeID());
@@ -75,19 +81,21 @@ public class TransformManager {
             }
         } else {
             if (toFrame != null) { // fromFrame does not exist, toFrame does
-                ManualFastSearchTree<CoordinateFrame> toFrameTree = toTree;
-                if (!toFrameTree.getRoot().equals(toFrame)) {
+                if (!toTree.getRoot().equals(toFrame)) {
                     throw new IllegalArgumentException("Destination frame " + toFrame + " already has a parent.");
                 }
                 fromFrame = new CoordinateFrame(fromId, toFrame.getTreeID());
-                toFrameTree.setRoot(fromFrame);
+                frameMap.put(fromId, fromFrame);
+                toTree.setRoot(fromFrame);
             } else { // fromFrame and toFrame each do not exist
                 treeIDInc++;
                 fromFrame = new CoordinateFrame(fromId, treeIDInc);
                 toFrame = new CoordinateFrame(toId, treeIDInc);
+                frameMap.put(fromId, fromFrame);
+                frameMap.put(toId, toFrame);
                 ManualFastSearchTree<CoordinateFrame> newTree = new ManualFastSearchTree<>(fromFrame);
                 frameTreeMap.put(treeIDInc, newTree);
-                newTree.add(fromFrame, toFrame);
+                newTree.add(toFrame, fromFrame);
             }
         }
 
