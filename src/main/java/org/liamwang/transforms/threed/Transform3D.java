@@ -1,5 +1,6 @@
 package org.liamwang.transforms.threed;
 
+import java.util.Arrays;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationConvention;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationOrder;
@@ -51,6 +52,15 @@ public class Transform3D {
     }
 
     public Transform3D subtract(Transform3D other) { // TODO: Is this even correct? (probably not)
-        return new Transform3D(this.position.subtract(this.orientation.applyInverseTo(other.position)), this.orientation.applyInverseTo(other.orientation));
+        return add(other.negate());
+    }
+
+    public Transform3D negate() {
+        return new Transform3D(position.negate(), orientation.revert());
+    }
+
+    @Override
+    public String toString() {
+        return "{Position: " + position.toString() + " Orientation: " + Arrays.toString(orientation.getAngles(RotationOrder.XYZ, RotationConvention.FRAME_TRANSFORM)) + "}";
     }
 }
