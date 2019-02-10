@@ -20,8 +20,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 javadoc {
     options {
         header '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>'
-        links 'http://first.wpi.edu/FRC/roborio/release/docs/java/'
-        linksOffline('https://docs.oracle.com/javase/8/docs/api/', 'https://docs.oracle.com/javase/8/docs/api/')
     }
     options.addStringOption("doctitle", "Transforms API")
     options.addStringOption("windowtitle", "Transforms API")
