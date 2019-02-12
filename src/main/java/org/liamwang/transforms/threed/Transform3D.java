@@ -56,7 +56,7 @@ public class Transform3D {
     }
 
     public Transform3D negate() {
-        return new Transform3D(position.negate(), orientation.revert());
+        return new Transform3D(orientation.applyTo(position.negate()), orientation.revert());
     }
 
     @Override
