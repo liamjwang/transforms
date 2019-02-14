@@ -60,7 +60,7 @@ public class TransformManager {
 
         if (fromFrame != null) {
             if (toFrame != null) { // fromFrame and toFrame both exist
-                if (fromTree.getParent(fromFrame).equals(toFrame)) {
+                if (toTree.getParent(toFrame).equals(fromFrame)) {
                     // good to go
                 } else {
                     if (!toTree.getRoot().equals(toFrame)) {
@@ -98,7 +98,6 @@ public class TransformManager {
                 newTree.add(toFrame, fromFrame);
             }
         }
-
         toFrame.setRelativeTransform(transform.getTransform3D());
     }
 
