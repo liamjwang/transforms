@@ -1,5 +1,8 @@
 package org.liamwang.transforms.threed;
 
+import static org.liamwang.transforms.utils.AboutEquals.rotationAboutEquals;
+import static org.liamwang.transforms.utils.AboutEquals.vector3DAboutEquals;
+
 import java.util.Arrays;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationConvention;
@@ -62,5 +65,15 @@ public class Transform3D {
     @Override
     public String toString() {
         return "{Position: " + position.toString() + " Orientation: " + Arrays.toString(orientation.getAngles(RotationOrder.XYZ, RotationConvention.FRAME_TRANSFORM)) + "}";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        return other instanceof Transform3D
+            && vector3DAboutEquals(position, ((Transform3D) other).position, 1E-4)
+            && rotationAboutEquals(orientation, ((Transform3D) other).orientation, 1E-7);
     }
 }
